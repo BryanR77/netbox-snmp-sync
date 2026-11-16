@@ -1,0 +1,28 @@
+netbox:
+  url: http://netbox.netbox.svc.cluster.local
+  token_env: NETBOX_TOKEN
+  tag: snmp-discovery
+  site: home
+snmp:
+  version: 2c            # or 3 (user, auth_key_env, priv_key_env, auth_protocol, priv_protocol)
+  community_env: SNMP_COMMUNITY
+  concurrency: 16
+inventory: {}            # or {netbox_tag: snmp-sync}: poll tagged devices at their primary IPv4
+defaults:
+  interface_exclude: ['^lo$']
+  address_exclude: []
+  max_delete_fraction: 0.25
+devices:
+  fw:
+    host: 192.168.42.1
+    interface_exclude: ['^pim6reg$']
+    interface_type:
+      - {match: '^eth[12]$', type: 25gbase-x-sfp28}
+      - {match: '^wg\d+$', type: virtual}
+  XMG1915-18EP-1:
+    host: 192.168.42.3
+    interface_exclude: ['^enif0$']
+  NWA210AX-1:
+    host: 192.168.42.4
+  NWA130BE-1:
+    host: 192.168.42.5

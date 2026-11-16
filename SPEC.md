@@ -155,7 +155,8 @@ Interfaces (match by exact name on the device):
   non-empty). `type` is set on create only, unless a config `interface_type` pattern
   matches (then it is enforced every run). Untagged interfaces are updated but never get
   the tag added and are never deleted.
-- Present in NetBox, tagged, absent from SNMP -> delete.
+- Present in NetBox, tagged, absent from SNMP -> delete, **unless** a primary IP, an untagged IP
+  or an untagged MAC is assigned to it (NetBox cascades interface deletes to assigned IPs/MACs).
 
 IP addresses (match by address string, VRF from config, default global):
 - Missing -> create, assigned to the interface, tagged.
@@ -220,8 +221,8 @@ devices:
 
 ifType -> NetBox type default map (overridable): 6 ethernetCsmacd -> `other` unless speed
 maps (1000 -> 1000base-t, 2500 -> 2.5gbase-t, 10000 -> 10gbase-t), 24 softwareLoopback ->
-`virtual`, 53 propVirtual / 135 l2vlan / 136 l3ipvlan / 131 tunnel / 209 bridge ->
-`virtual`, 161 ieee8023adLag -> `lag`, 71 ieee80211 -> `ieee802.11ax` (config may override).
+`virtual`, 53 propVirtual / 135 l2vlan / 136 l3ipvlan / 131 tunnel ->
+`virtual`, 209 bridge -> `bridge`, 161 ieee8023adLag -> `lag`, 71 ieee80211 -> `ieee802.11ax` (config may override).
 
 ## CLI
 

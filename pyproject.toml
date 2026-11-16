@@ -1,0 +1,22 @@
+[build-system]
+requires = ["setuptools>=61"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "netbox_snmp_sync"
+version = "0.1.0"
+requires-python = ">=3.12"
+dependencies = [
+    "pysnmp>=7,<8",
+    "PyYAML",
+    "cryptography>=43",
+]
+
+[project.optional-dependencies]
+test = ["pytest"]
+
+[project.scripts]
+netbox-snmp-sync = "netbox_snmp_sync.cli:main"
+
+[tool.setuptools]
+packages = ["netbox_snmp_sync"]
