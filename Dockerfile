@@ -1,11 +1,11 @@
 # Build wheels once; the runtime image has no pip and never reaches PyPI.
-FROM docker.io/library/python:3.13-alpine AS build
+FROM docker.io/library/python:3.15-alpine AS build
 WORKDIR /src
 COPY pyproject.toml ./
 COPY netbox_snmp_sync ./netbox_snmp_sync
 RUN pip wheel --no-cache-dir --wheel-dir /wheels .
 
-FROM docker.io/library/python:3.13-alpine
+FROM docker.io/library/python:3.15-alpine
 COPY --from=build /wheels /wheels
 RUN pip install --no-cache-dir --no-index /wheels/*.whl \
  && rm -rf /wheels \
